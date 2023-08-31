@@ -1,2 +1,89 @@
 # File-Analyzer
-A file analyzer tool designed for programmers
+A fast and light file analyzer tool designed for programmers
+
+### Supported files
+- Programming languages
+    - [ ] C / C++
+    - [ ] C#
+    - [ ] Java
+    - [ ] Python
+    - [ ] Rust
+    - [ ] Cobol
+    - [ ] Fortran
+    - [ ] Go
+    - [ ] Ruby
+    - [ ] Kotlin
+    - [ ] Lua
+    - [ ] V
+    - [ ] Odin
+    - [ ] R
+    - [ ] Matlab
+    - [ ] Dart
+    - [ ] Brainfuck
+    - [ ] Mathematica
+    - [ ] Erlang
+    - [ ] Elixir
+    - [ ] Vim
+    - [ ] Beef
+    - [ ] JAML
+    - [ ] Javascript
+    - [ ] Typescript
+    - [ ] HTML
+    - [ ] CSS
+    - [ ] PHP
+    - [ ] Bash
+    - [ ] Batch
+    - [ ] Assembly x86
+    - [ ] Assembly Arm
+    - [ ] Powershell
+    - [ ] Scala
+    - [ ] Swift
+    - [ ] SQL
+    - [ ] Julia
+    - [ ] Perl
+- Images
+    - [ ] jpg / jpeg
+    - [ ] png
+- Videos
+    - [ ] mp4
+    - [ ] gif
+- Audios
+    - [ ] mp3
+    - [ ] wav
+    - [ ] flac
+    - [ ] ogg
+
+
+### Obtained info
+
+- General :
+    - file amount
+    - min file size
+    - max file size
+    - average file size
+    - total file size
+- Programming languages:
+    - total rows
+    - empty and non-empty rows
+    - rows containing comments
+    - rows containing imports
+    - characters
+    - digits and numbers
+    - symbols
+    - white spaces
+    - total
+- Images:
+    - min resolution
+    - max resolution
+    - average resolution
+- Audios:
+    - min length
+    - max length
+    - average length
+    - total length
+- Videos:
+    - min length
+    - max length
+    - total frames
+    - min resolution
+    - max resolution
