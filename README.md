@@ -1,8 +1,23 @@
 # File-Analyzer
 A fast and light file analyzer tool designed for programmers
 
+## Features
+
+- Fast
+    Made in pure C, with some C++ helpers, to analyze the files in the most efficient possible way
+- No gui
+    You can analyze your files without showing the gui, but printing the data in the terminal.
+    To do so, just call `FileAnalyzer.exe nogui "path/to/your/folder/or/file" "even/multiple/files!" "so/wow!"`
+    You could even do `FileAnalyzer.exe "an/awesome/file" nogui`
+- Drag and drop
+    You can drag and drop your files to the window to begin the data parsing
+- Total
+    See the total of everything, how many files, how many audios, how many rows of code, etc.
+- Specific languages
+    We've introduced some specific data from various languages, like the symbols in brainfuck, etc.
+
 ### Supported files
-- Programming languages
+- Programming language
     - [ ] C / C++
     - [ ] C#
     - [ ] Java
@@ -41,29 +56,27 @@ A fast and light file analyzer tool designed for programmers
     - [ ] SQL
     - [ ] Julia
     - [ ] Perl
-- Images
+- Image
     - [ ] jpg / jpeg
     - [ ] png
-- Videos
+- Video
     - [ ] mp4
-    - [ ] gif
-- Audios
+- Audio
     - [ ] mp3
     - [ ] wav
     - [ ] flac
     - [ ] ogg
 
-
 ### Obtained info
 
-- General :
+- General:
     - file amount
     - min file size
     - max file size
     - average file size
     - total file size
-- Programming languages:
-    - total rows
+- Programming language:
+    - rows
     - empty and non-empty rows
     - rows containing comments
     - rows containing imports
@@ -71,17 +84,15 @@ A fast and light file analyzer tool designed for programmers
     - digits and numbers
     - symbols
     - white spaces
-    - total
-- Images:
+    - total size
+- Image:
     - min resolution
     - max resolution
-    - average resolution
-- Audios:
+- Audio:
     - min length
     - max length
-    - average length
     - total length
-- Videos:
+- Video:
     - min length
     - max length
     - total frames
