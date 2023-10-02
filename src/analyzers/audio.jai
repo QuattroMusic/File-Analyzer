@@ -5,10 +5,9 @@ AudioFilesData :: struct{
     total_length: int;
 }
 TableAudio :: struct{
-    data: [..]AudioFilesData;
-    total_min_length: int;
-    total_max_length: int;
-    total_of_total_length: int;
+    using table: Table(AudioFilesData);
+    total: AudioFilesData;
+    total.name = "Total";
 }
 
 is_mp3_audio :: (ext: string) -> bool{

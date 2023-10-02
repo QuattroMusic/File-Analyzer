@@ -4,9 +4,9 @@ ImageFilesData :: struct{
     max_resolution: vec2;
 }
 TableImage :: struct{
-    data: [..]ImageFilesData;
-    total_min_resolution: vec2;  // Check(Quattro)
-    total_max_resolution: vec2;  // Check(Quattro)
+    using table: Table(ImageFilesData);
+    total: ImageFilesData;
+    total.name = "Total";
 }
 
 is_jpg_image :: (ext: string) -> bool{

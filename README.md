@@ -3,7 +3,7 @@ A fast and light file analyzer tool designed for programmers
 
 ## Features
 
-- Specific languages
+- Specific languages (TODO)
     We've introduced some specific data from various languages, like the amount
     of each symbols in brainfuck, the amount of assembly labels, etc.
     See table below of supported files

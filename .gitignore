@@ -1,5 +1,1 @@
-.clangd
-*.exe
-*.obj
-*.ilk
-*.pdb
+.build

@@ -1,27 +1,24 @@
-GeneralFilesData :: struct{
-    ext: string;
+GeneralFilesData :: struct {
+    name: string;
     min_size: int;
     max_size: int;
     average_size: float;
     total_size: int;
     amount: int;
 }
-TableGeneral :: struct{
-    data: [..] GeneralFilesData;
-    total_min_size: int;
-    total_max_size: int;
-    total_average_size: float;
-    total_of_total_size: int;
-    total_amount: int;
+TableGeneral :: struct {
+    using table: Table(GeneralFilesData);
+    total: GeneralFilesData;
+    total.name = "Total";
 }
 
-analyze_general ::(content: string, ext: string){
+analyze_general ::(content: string, ext: string) {
     size := content.count;
     
     // Note(Quattro) if there's already a file with the same extension
     for * table_general.data{
         data := (<<it);
-        if ext == data.ext{
+        if ext == data.name{
             if size < data.min_size then (<<it).min_size = size;
             if size < data.max_size then (<<it).max_size = size;
             (<<it).total_size += size;
@@ -33,7 +30,7 @@ analyze_general ::(content: string, ext: string){
     
     // if not
     data: GeneralFilesData;
-    data.ext = copy_string(ext);
+    data.name = copy_string(ext);
     data.min_size = size;
     data.max_size = size;
     data.average_size = cast(float)size;

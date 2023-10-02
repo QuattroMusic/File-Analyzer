@@ -13,18 +13,9 @@ ProgramFilesData :: struct {
     total_size: int;
 }
 TableProgram :: struct {
-    data: [..]ProgramFilesData;
-    total_rows: int;
-    total_empty_rows: int;
-    total_non_empty_rows: int;
-    total_rows_with_comment: int;
-    total_rows_with_import: int;
-    total_characters: int;
-    total_digits: int;
-    total_numbers: int;
-    total_symbols: int;
-    total_whitespaces: int;
-    total_of_total_size: int;
+    using table: Table(ProgramFilesData);
+    total: ProgramFilesData;
+    total.name = "Total";
 }
 
 is_c_code :: inline (ext: string) -> bool   { return ext == "c" || ext == "cpp" || ext == "h" || ext == "hpp"; }
@@ -43,6 +34,7 @@ analyze_code :: (path: string, data: *ProgramFilesData, single_line_comment: str
     res := true;
     is_inside_string := false;
     is_inside_multiline_comment := false;
+    old_rows := data.rows;
     
     while res {
         res, analyze, next = split_from_left(next, #char "\n");
@@ -81,31 +73,32 @@ analyze_code :: (path: string, data: *ProgramFilesData, single_line_comment: str
                     if begins_with(offset_row, single_line_comment) {
                         data.rows_with_comment += 1;
                     }
-                    if begins_with(offset_row, opening_multi_line_comment){
+                    if opening_multi_line_comment && begins_with(offset_row, opening_multi_line_comment){
                         data.rows_with_comment += 1;
                         is_inside_multiline_comment = true;
                     }
-                    if begins_with(offset_row, closing_multi_line_comment){
+                    if closing_multi_line_comment && begins_with(offset_row, closing_multi_line_comment){
                         is_inside_multiline_comment = false;
                     }
                 }
             }
             idx += 1;
         }
-        trim_str := analyze;
-        trim_left(trim_str);
+        trim_str := trim_left(analyze);
         if trim_str.count == 0 then data.empty_rows += 1;
     }
     
-    data.whitespaces += data.rows - 1;
-    data.total_size = text.count;
-    data.non_empty_rows = data.rows - data.empty_rows;
+    // Perf(Quattro) i could hack this by doing (total_size - characters - digits - symbols) so, two buffs from this:
+    //               - we're increasing the speed of the parser
+    //               - we're "ignoring" the /r (parser side)
+    data.whitespaces += (data.rows - old_rows - 1);
+    data.total_size += text.count;
+    data.non_empty_rows = (data.rows - data.empty_rows);
 }
 
 parse_prog_language :: (path: string, ext: string, display_name: string, slc: string, omlc: string, cmlc: string, imports: .. string) -> bool {
     data: ProgramFilesData;
     data_ptr: *ProgramFilesData = *data;
-    // Todo(Quattro) path_extension to get the file extension (without the dot)
     
     is_already_present := false;
     for table_program.data {
@@ -136,7 +129,7 @@ AnalyzerLanguage :: struct {
 }
 
 LANGUAGE_TABLE :: AnalyzerLanguage.[
-    .{is_c_code, "C/C++", "//", "/*", "*/", .["#include"]},
+    .{is_c_code, "C / C++", "//", "/*", "*/", .["#include"]},
     .{is_py_code, "Python", "#", "", "", .["import", "from"]},
     .{is_jai_code, "Jai", "//", "/*", "*/", .["#import", "#load"]}
     // Todo(Quattro) add more languages

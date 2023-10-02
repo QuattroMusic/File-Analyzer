@@ -1,5 +1,5 @@
 VideoFilesData :: struct{
-    ext: string;
+    name: string;
     min_length: float;
     max_length: float;
     total_frames: float;
@@ -7,12 +7,9 @@ VideoFilesData :: struct{
     max_resolution: vec2;
 }
 TableVideo :: struct{
-    data: [..]VideoFilesData;
-    total_min_length: float;
-    total_max_length: float;
-    total_of_total_frames: float;
-    total_min_resolution: vec2;  // Check(Quattro)
-    total_max_resolution: vec2;  // Check(Quattro)
+    using table: Table(VideoFilesData);
+    total: VideoFilesData;
+    total.name = "Total";
 }
 
 is_mp4_video :: (ext: string) -> bool{

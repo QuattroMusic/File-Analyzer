@@ -17,7 +17,7 @@ parse_files :: (path: string){
         for lang: LANGUAGE_TABLE {
             if lang.check(ext) {
                 parse_prog_language(file, ext, lang.display_name, lang.slc, lang.omlc, lang.cmlc, ..lang.imports);
-                continue lang;
+                continue file;
             }
         }
         
@@ -28,9 +28,18 @@ parse_files :: (path: string){
     }
     array_free(files_to_analyze);
     
-    print_table();
-}
-
-print_table :: () {
-    
+    // Note(Quattro) calculate the total
+    for table_program.data {
+        table_program.total.rows += it.rows;
+        table_program.total.empty_rows += it.empty_rows;
+        table_program.total.non_empty_rows += it.non_empty_rows;
+        table_program.total.rows_with_comment += it.rows_with_comment;
+        table_program.total.rows_with_import += it.rows_with_import;
+        table_program.total.characters += it.characters;
+        table_program.total.digits += it.digits;
+        table_program.total.numbers += it.numbers;
+        table_program.total.symbols += it.symbols;
+        table_program.total.whitespaces += it.whitespaces;
+        table_program.total.total_size += it.total_size;
+    }
 }

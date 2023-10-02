@@ -14,11 +14,12 @@ vec2 :: struct{
 #load "src/analyzers/general.jai";
 #load "src/analyzers/program.jai";
 #load "src/parser.jai";
+#load "src/printer.jai";
 
-table_audio:   TableAudio;
 table_general: TableGeneral;
-table_image:   TableImage;
 table_program: TableProgram;
+table_image:   TableImage;
+table_audio:   TableAudio;
 table_video:   TableVideo;
 
 main :: () {
@@ -26,14 +27,13 @@ main :: () {
     
     path: string;
     if __command_line_arguments.count == 1 {
-        path = ".";
+        path = "tests";
     } else {
         path = to_string(__command_line_arguments.data[1]);
     }
     
     parse_files(path);
+    print_tables();
     
     // report_memory_leaks();
-    
-    // print("%\n", table_program.data);
 }
