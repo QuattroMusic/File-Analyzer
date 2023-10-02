@@ -6,11 +6,6 @@ GeneralFilesData :: struct {
     total_size: int;
     amount: int;
 }
-TableGeneral :: struct {
-    using table: Table(GeneralFilesData);
-    total: GeneralFilesData;
-    total.name = "Total";
-}
 
 analyze_general ::(content: string, ext: string) {
     size := content.count;

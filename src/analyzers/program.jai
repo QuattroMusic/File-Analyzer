@@ -12,11 +12,6 @@ ProgramFilesData :: struct {
     whitespaces: int;
     total_size: int;
 }
-TableProgram :: struct {
-    using table: Table(ProgramFilesData);
-    total: ProgramFilesData;
-    total.name = "Total";
-}
 
 is_c_code :: inline (ext: string) -> bool   { return ext == "c" || ext == "cpp" || ext == "h" || ext == "hpp"; }
 is_py_code :: inline (ext: string) -> bool  { return ext == "py"; }

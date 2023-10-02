@@ -4,11 +4,6 @@ AudioFilesData :: struct{
     max_length: int;
     total_length: int;
 }
-TableAudio :: struct{
-    using table: Table(AudioFilesData);
-    total: AudioFilesData;
-    total.name = "Total";
-}
 
 is_mp3_audio :: (ext: string) -> bool{
     return ext == ".mp3";

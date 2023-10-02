@@ -1,7 +1,10 @@
 Table :: struct (T: Type) {
+    // Note(Quattro) where T is a single row
     data: [..] T;
     widths: [..] int;
     names: [..] string;
+    total: T;
+    total.name = "Total";
 }
 
 init_table :: (table: *$T) {

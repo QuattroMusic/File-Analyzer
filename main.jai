@@ -8,19 +8,19 @@ vec2 :: struct{
     x, y: float;
 }
 
-#load "src/analyzers/audio.jai";
-#load "src/analyzers/image.jai";
-#load "src/analyzers/video.jai";
 #load "src/analyzers/general.jai";
 #load "src/analyzers/program.jai";
+#load "src/analyzers/image.jai";
+#load "src/analyzers/audio.jai";
+#load "src/analyzers/video.jai";
 #load "src/parser.jai";
 #load "src/printer.jai";
 
-table_general: TableGeneral;
-table_program: TableProgram;
-table_image:   TableImage;
-table_audio:   TableAudio;
-table_video:   TableVideo;
+table_general: Table(GeneralFilesData);
+table_program: Table(ProgramFilesData);
+table_image: Table(ImageFilesData);
+table_audio: Table(AudioFilesData);
+table_video: Table(VideoFilesData);
 
 main :: () {
     // Todo(Quattro) change this file to support workspaces (for optimization and multiple platforms)
