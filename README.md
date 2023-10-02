@@ -3,18 +3,14 @@ A fast and light file analyzer tool designed for programmers
 
 ## Features
 
-- Fast
-    Made in pure C, with some C++ helpers, to analyze the files in the most efficient possible way
-- No gui
-    You can analyze your files without showing the gui, but printing the data in the terminal.
-    To do so, just call `FileAnalyzer.exe nogui "path/to/your/folder/or/file" "even/multiple/files!" "so/wow!"`
-    You could even do `FileAnalyzer.exe "an/awesome/file" nogui`
-- Drag and drop
-    You can drag and drop your files to the window to begin the data parsing
+- Specific languages
+    We've introduced some specific data from various languages, like the amount
+    of each symbols in brainfuck, the amount of assembly labels, etc.
+    See table below of supported files
+- Exclusion (TODO)
+    You can select a folder with extension or files to exclude, so the analyzer will ignore them
 - Total
     See the total of everything, how many files, how many audios, how many rows of code, etc.
-- Specific languages
-    We've introduced some specific data from various languages, like the symbols in brainfuck, etc.
 
 ### Supported files
 - Programming language
@@ -48,8 +44,7 @@ A fast and light file analyzer tool designed for programmers
     - [ ] PHP
     - [ ] Bash
     - [ ] Batch
-    - [ ] Assembly x86
-    - [ ] Assembly Arm
+    - [ ] Assembly ASM
     - [ ] Powershell
     - [ ] Scala
     - [ ] Swift
@@ -61,6 +56,7 @@ A fast and light file analyzer tool designed for programmers
     - [ ] png
 - Video
     - [ ] mp4
+    - [ ] gif
 - Audio
     - [ ] mp3
     - [ ] wav
