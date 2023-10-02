@@ -90,7 +90,9 @@ print_row :: (table: *$T, idx: s64) {
         result.type = mem.type;
         result.value_pointer = memory;
         
-        s := tprint(" %", result);
+        s: string;
+        if mem.type.type == .FLOAT s = tprint(" %", formatFloat(result, trailing_width=2));
+        else                       s = tprint(" %", result);
         append(*builder, s);
         remainder := table.widths[it_index] - s.count + 1;
         for 0..remainder append(*builder, " ");
@@ -115,7 +117,9 @@ print_total :: (table: *$T) {
         result.type = mem.type;
         result.value_pointer = memory;
         
-        s := tprint(" %", result);
+        s: string;
+        if mem.type.type == .FLOAT s = tprint(" %", formatFloat(result, trailing_width=2));
+        else                       s = tprint(" %", result);
         append(*builder, s);
         remainder := table.widths[it_index] - s.count + 1;
         for 0..remainder append(*builder, " ");
@@ -128,25 +132,29 @@ print_total :: (table: *$T) {
 }
 
 print_tables :: () {
+    // Perf(Quattro) a string builder for each row? why not a single one?
     print_all_table_content :: (table: *$T) {
         init_table(table);
         print_spacer(table);
         print_names(table);
         print_spacer(table);
-        for table_program.data print_row(table, it_index);
+        for table.data print_row(table, it_index);
         print_spacer(table);
-        if table_program.data.count > 1 {
-            // no need to print the total, if there's only one row
+        if table.data.count > 1 {
+            // Note(Quattro) no need to print the total, if there's only one row
             print_total(table);
             print_spacer(table);
         }
     }
     
+    // Todo(Quattro) sort first (?)
+    //               based on what? on what the user tell us or by the file amount? or the total size?
+    
     if table_general.data.count then print_all_table_content(*table_general);
     if table_program.data.count then print_all_table_content(*table_program);
-    if table_image.data.count then print_all_table_content(*table_image);
-    if table_audio.data.count then print_all_table_content(*table_audio);
-    if table_video.data.count then print_all_table_content(*table_video);
+    if table_image.data.count   then print_all_table_content(*table_image);
+    if table_audio.data.count   then print_all_table_content(*table_audio);
+    if table_video.data.count   then print_all_table_content(*table_video);
     
     reset_temporary_storage();
 }

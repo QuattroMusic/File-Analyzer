@@ -3,6 +3,8 @@ A fast and light file analyzer tool designed for programmers
 
 ## Features
 
+- Designed for projects
+    Where there are images, audios and codes; get all the information about them!
 - Specific languages (TODO)
     We've introduced some specific data from various languages, like the amount
     of each symbols in brainfuck, the amount of assembly labels, etc.

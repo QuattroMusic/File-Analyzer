@@ -3,10 +3,10 @@ VideoFilesData :: struct{
     min_length: float;
     max_length: float;
     total_frames: float;
-    min_resolution: vec2;
-    max_resolution: vec2;
+    min_resolution: Vector2;
+    max_resolution: Vector2;
 }
 
 is_mp4_video :: (ext: string) -> bool{
-    return ext == ".mp4";
+    return ext == "mp4";
 }
