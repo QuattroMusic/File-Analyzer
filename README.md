@@ -10,16 +10,20 @@ A fast and light file analyzer tool designed for programmers
     of each symbols in brainfuck, the amount of assembly labels, etc.
     See table below of supported files
 - Exclusion (TODO)
-    You can select a folder with extension or files to exclude, so the analyzer will ignore them
+    You can select a folder or an extension of files to exclude, so the analyzer will ignore them
 - Total
     See the total of everything, how many files, how many audios, how many rows of code, etc.
 
+### Visual example
+![.data/analyzer.png]
+
 ### Supported files
 - Programming language
-    - [ ] C / C++
+    - [x] C / C++
     - [ ] C#
+    - [x] Jai
     - [ ] Java
-    - [ ] Python
+    - [x] Python
     - [ ] Rust
     - [ ] Cobol
     - [ ] Fortran
