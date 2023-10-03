@@ -4,18 +4,18 @@ A fast and light file analyzer tool designed for programmers
 ## Features
 
 - Designed for projects
-    Where there are images, audios and codes; get all the information about them!
+    - Where there are images, audios and codes; get all the information about them!
 - Specific languages (TODO)
-    We've introduced some specific data from various languages, like the amount
+    - We've introduced some specific data from various languages, like the amount
     of each symbols in brainfuck, the amount of assembly labels, etc.
     See table below of supported files
 - Exclusion (TODO)
-    You can select a folder or an extension of files to exclude, so the analyzer will ignore them
+    - You can select a folder or an extension of files to exclude, so the analyzer will ignore them
 - Total
-    See the total of everything, how many files, how many audios, how many rows of code, etc.
+    - See the total of everything, how many files, how many audios, how many rows of code, etc.
 
 ### Visual example
-![.data/analyzer.png]
+![image](.data/analyzer.png)
 
 ### Supported files
 - Programming language
