@@ -1,7 +1,13 @@
-#import "Basic"()(MEMORY_DEBUGGER = true);
+#if FULL_DEBUG {
+    #import "Basic"()(MEMORY_DEBUGGER = true);
+} else {
+    #import "Basic";
+}
+
 #import "String";
 #import "File";
 #import "File_Utilities";
+#import "Compiler";
 
 vec2 :: struct {
     x, y: float;
@@ -37,5 +43,7 @@ main :: () {
     parse_files(path);
     print_tables();
     
-    // report_memory_leaks();
+    #if FULL_DEBUG {
+        report_memory_leaks();
+    }
 }

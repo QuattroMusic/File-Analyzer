@@ -3,6 +3,7 @@ parse_files :: (path: string){
     is_dir := is_directory(path);
     
     if is_dir {
+        // Perf(Quattro) implement this by my own, so, filter directly inside
         view := file_list(path, recursive=true);
         files_to_analyze.count = view.count;
         files_to_analyze.data = view.data;
@@ -13,14 +14,15 @@ parse_files :: (path: string){
         print("File or path given does not exists or can't be readed, aborting\n");
     }
     
-    // filter
+    // Temp(Quattro) filter
     for files_to_analyze {
         for dir: parse_path(it).words {
             ext, success := path_extension(it);
             for excl: exclusions {
-                if dir == excl || (success && ext == excl) {
+                if begins_with(dir, excl) || (success && ext == excl) {
                     free(it);
                     remove it;
+                    continue it;
                 }
             }
         }
