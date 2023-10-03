@@ -35,7 +35,7 @@ main :: () {
     
     path: string;
     if __command_line_arguments.count == 1 {
-        path = "../fango";
+        path = ".";
     } else {
         path = to_string(__command_line_arguments.data[1]);
     }
