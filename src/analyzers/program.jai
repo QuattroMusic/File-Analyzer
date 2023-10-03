@@ -29,11 +29,11 @@ analyze_code :: (path: string, data: *ProgramFilesData, single_line_comment: str
     res := true;
     is_inside_string := false;
     is_inside_multiline_comment := false;
-    old_rows := data.rows;
+    new_rows := 0;
     
     while res {
         res, analyze, next = split_from_left(next, #char "\n");
-        data.rows += 1;
+        new_rows += 1;
         if is_inside_multiline_comment then data.rows_with_comment += 1;
         for imports if begins_with(analyze, it) then data.rows_with_import += 1;
         
@@ -83,10 +83,8 @@ analyze_code :: (path: string, data: *ProgramFilesData, single_line_comment: str
         if trim_str.count == 0 then data.empty_rows += 1;
     }
     
-    // Perf(Quattro) i could hack this by doing (total_size - characters - digits - symbols) so, two buffs from this:
-    //               - we're increasing the speed of the parser
-    //               - we're "ignoring" the /r (parser side)
-    data.whitespaces += (data.rows - old_rows - 1);
+    data.rows += new_rows;
+    data.whitespaces += (new_rows - 1);
     data.total_size += text.count;
     data.non_empty_rows = (data.rows - data.empty_rows);
 }
@@ -124,8 +122,8 @@ AnalyzerLanguage :: struct {
 }
 
 LANGUAGE_TABLE :: AnalyzerLanguage.[
+    .{is_jai_code, "Jai", "//", "/*", "*/", .["#import", "#load"]},
     .{is_c_code, "C / C++", "//", "/*", "*/", .["#include"]},
-    .{is_py_code, "Python", "#", "", "", .["import", "from"]},
-    .{is_jai_code, "Jai", "//", "/*", "*/", .["#import", "#load"]}
+    .{is_py_code, "Python", "#", "", "", .["import", "from"]}
     // Todo(Quattro) add more languages
 ];

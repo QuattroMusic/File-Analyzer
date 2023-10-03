@@ -1,6 +1,6 @@
 @echo off
 
-del analyzer.exe
+if exist analyzer.exe del analyzer.exe
 
 jai main.jai -exe analyzer
 

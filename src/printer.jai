@@ -7,6 +7,15 @@ Table :: struct (T: Type) {
     total.name = "Total";
 }
 
+format_names :: (str: string) -> string {
+    s := tprint("%", str);
+    for cast([] u8) s {
+        if it_index == 0 || s.data[it_index - 1] == #char "_" then s.data[it_index] = (s.data[it_index] - 32);
+        if s.data[it_index - 1] == #char "_" then s.data[it_index - 1] = #char " ";
+    }
+    return s;
+}
+
 init_table :: (table: *$T) {
     // Note(Quattro) dinamically get the members value, converts them to string to get the max width for each row
     
@@ -16,7 +25,7 @@ init_table :: (table: *$T) {
     for table.data if it.name.count > longest_name then longest_name = it.name.count;
     
     array_add(*table.widths, max(longest_name, ifx table.data.count > 1 then "total".count else "name".count));
-    array_add(*table.names, "name");
+    array_add(*table.names, "Name");
     
     for mem: type_info(type_of(table.total)).members {
         if mem.offset_in_bytes == 0 then continue;
@@ -28,10 +37,9 @@ init_table :: (table: *$T) {
         result.value_pointer = memory;
         len := max(tprint("%", result).count, tprint("%", mem.name).count);
         
-        array_add(*table.names, mem.name);  // Todo(Quattro) format the name correctly
+        array_add(*table.names, format_names(mem.name));
         array_add(*table.widths, len);
     }
-    print("\n");
 }
 
 print_spacer :: (table: *$T) {
@@ -131,6 +139,16 @@ print_total :: (table: *$T) {
     free(s);
 }
 
+sort_based_on_amount :: (table: $T) {
+    for i, idx_i: table.data {
+        for idx_j: idx_i + 1..table.data.count - 1 {
+            if table.data[idx_i].amount < table.data[idx_j].amount {
+                Swap(*table.data[idx_i], *table.data[idx_j]);
+            }
+        }
+    }
+}
+
 print_tables :: () {
     // Perf(Quattro) a string builder for each row? why not a single one?
     print_all_table_content :: (table: *$T) {
@@ -145,10 +163,13 @@ print_tables :: () {
             print_total(table);
             print_spacer(table);
         }
+        print("\n");
     }
     
-    // Todo(Quattro) sort first (?)
-    //               based on what? on what the user tell us or by the file amount? or the total size?
+    // Check(Quattro) sort first (?)
+    //                based on what? on what the user tell us or by the file amount? or the total size?
+    //                for now, we're sorting based on the amount
+    sort_based_on_amount(table_general);
     
     if table_general.data.count then print_all_table_content(*table_general);
     if table_program.data.count then print_all_table_content(*table_program);
