@@ -1,8 +1,3 @@
-// Note(Quattro) i have no idea why it does this, but if i do #load "main.jai", it searches the file inside ".build/"
-TARGET_PROGRAM :: #string DONE
-#load "../main.jai";
-DONE
-
 FULL_DEBUG_ON :: #string DONE
 FULL_DEBUG :: true;
 DONE
@@ -45,7 +40,6 @@ build :: () {
         }
     }
     
-    make_directory_if_it_does_not_exist("out");
     w := compiler_create_workspace();
     options := get_build_options();
     options.output_executable_name = "analyzer";
@@ -68,7 +62,7 @@ build :: () {
         }
     }
     
-    add_build_string(TARGET_PROGRAM, w);
+    add_build_file("main.jai", w);
     set_build_options_dc(.{do_output=false});
 }
 

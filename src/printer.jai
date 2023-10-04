@@ -42,54 +42,38 @@ init_table :: (table: *$T) {
     }
 }
 
-print_spacer :: (table: *$T) {
+print_spacer :: (table: *$T, builder: *String_Builder) {
     // Note(Quattro) print a separator (e.g. +-----+-----+---+------+---+)
-    builder : String_Builder;
-    init_string_builder(*builder);
-    
-    append(*builder, "+");
+    append(builder, "+");
     for table.widths {
         for 0..it + 1 {
-            append(*builder, "-");
+            append(builder, "-");
         }
-        append(*builder, "+");
+        append(builder, "+");
     }
-    
-    s := builder_to_string(*builder);
-    print("%\n", s);
-    free(s);
+    append(builder, "\n");
 }
 
-print_names :: (table: *$T) {
-    builder : String_Builder;
-    init_string_builder(*builder);
-    
+print_names :: (table: *$T, builder: *String_Builder) {
     /* Check(Quattro) with this implementation, we get the table like this
        +-----+---------+-----+
        | ab  | a       | c   |
        ...
        but what if we wanted to make the text at the center?
     */
-    
-    append(*builder, "|");
+    append(builder, "|");
     for table.names {
         s := tprint(" %", it);
-        append(*builder, s);
+        append(builder, s);
         remainder := table.widths[it_index] - s.count + 1;
-        for 0..remainder append(*builder, " ");
-        append(*builder, "|");
+        for 0..remainder append(builder, " ");
+        append(builder, "|");
     }
-    
-    s := builder_to_string(*builder);
-    print("%\n", s);
-    free(s);
+    append(builder, "\n");
 }
 
-print_row :: (table: *$T, idx: s64) {
-    builder : String_Builder;
-    init_string_builder(*builder);
-    
-    append(*builder, "|");
+print_row :: (table: *$T, idx: s64, builder: *String_Builder) {
+    append(builder, "|");
 
     for mem: type_info(type_of(table.total)).members {
         memory := temporary_alloc(mem.type.runtime_size);
@@ -101,22 +85,16 @@ print_row :: (table: *$T, idx: s64) {
         s: string;
         if mem.type.type == .FLOAT s = tprint(" %", formatFloat(result, trailing_width=2));
         else                       s = tprint(" %", result);
-        append(*builder, s);
+        append(builder, s);
         remainder := table.widths[it_index] - s.count + 1;
-        for 0..remainder append(*builder, " ");
-        append(*builder, "|");
+        for 0..remainder append(builder, " ");
+        append(builder, "|");
     }
-    
-    s := builder_to_string(*builder);
-    print("%\n", s);
-    free(s);
+    append(builder, "\n");
 }
 
-print_total :: (table: *$T) {
-    builder : String_Builder;
-    init_string_builder(*builder);
-    
-    append(*builder, "|");
+print_total :: (table: *$T, builder: *String_Builder) {
+    append(builder, "|");
 
     for mem: type_info(type_of(table.total)).members {
         memory := temporary_alloc(mem.type.runtime_size);
@@ -128,15 +106,12 @@ print_total :: (table: *$T) {
         s: string;
         if mem.type.type == .FLOAT s = tprint(" %", formatFloat(result, trailing_width=2));
         else                       s = tprint(" %", result);
-        append(*builder, s);
+        append(builder, s);
         remainder := table.widths[it_index] - s.count + 1;
-        for 0..remainder append(*builder, " ");
-        append(*builder, "|");
+        for 0..remainder append(builder, " ");
+        append(builder, "|");
     }
-    
-    s := builder_to_string(*builder);
-    print("%\n", s);
-    free(s);
+    append(builder, "\n");
 }
 
 sort_based_on_amount :: (table: $T) {
@@ -152,18 +127,22 @@ sort_based_on_amount :: (table: $T) {
 print_tables :: () {
     // Perf(Quattro) a string builder for each row? why not a single one?
     print_all_table_content :: (table: *$T) {
+        builder: String_Builder;
+        init_string_builder(*builder);
         init_table(table);
-        print_spacer(table);
-        print_names(table);
-        print_spacer(table);
-        for table.data print_row(table, it_index);
-        print_spacer(table);
+        print_spacer(table, *builder);
+        print_names(table, *builder);
+        print_spacer(table, *builder);
+        for table.data print_row(table, it_index, *builder);
+        print_spacer(table, *builder);
         if table.data.count > 1 {
             // Note(Quattro) no need to print the total, if there's only one row
-            print_total(table);
-            print_spacer(table);
+            print_total(table, *builder);
+            print_spacer(table, *builder);
         }
-        print("\n");
+        s := builder_to_string(*builder);
+        print("%\n", s);
+        free(s);
     }
     
     // Check(Quattro) sort first (?)

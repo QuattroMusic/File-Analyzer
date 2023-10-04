@@ -31,14 +31,10 @@ table_video:   Table(VideoFilesData);
 exclusions :: string.[".git", ".build", "exe"];
 
 main :: () {
-    // Todo(Quattro) change this file to support workspaces (for optimization and multiple platforms)
-    
     path: string;
-    if __command_line_arguments.count == 1 {
-        path = ".";
-    } else {
-        path = to_string(__command_line_arguments.data[1]);
-    }
+    args := get_command_line_arguments();
+    // Todo(Quattro) change this to support multiple inputs
+    path = ifx args.count == 1 then "." else args.data[1];
     
     parse_files(path);
     print_tables();
