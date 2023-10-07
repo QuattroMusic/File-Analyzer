@@ -155,6 +155,4 @@ print_tables :: () {
     if table_image.data.count   then print_all_table_content(*table_image);
     if table_audio.data.count   then print_all_table_content(*table_audio);
     if table_video.data.count   then print_all_table_content(*table_video);
-    
-    reset_temporary_storage();
 }

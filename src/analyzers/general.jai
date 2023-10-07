@@ -1,10 +1,10 @@
 GeneralFilesData :: struct {
     name: string;
+    amount: int;
     min_size: int;
     max_size: int;
     average_size: float;
     total_size: int;
-    amount: int;
 }
 
 analyze_general :: (path: string, ext: string) {
